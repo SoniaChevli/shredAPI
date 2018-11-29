@@ -10,11 +10,8 @@ const exerciseSchema = new mongoose.Schema({
   activeTime: String,
   repitions: Number,
   author: {
-    _id: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User"
-    },
-    userName: { type: String }
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User"
   },
   created_at: {
     type: Date,

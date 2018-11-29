@@ -3,7 +3,6 @@ const Excercise = require("../models/exerciseModel");
 module.exports = {
   createExercise: async (req, res) => {
     let finalExercises = [];
-
     for (let i = 0; i < req.body.length; i++) {
       if (Object.keys(req.body[i]).length === 0) continue;
       const { exerciseDescription, activeTime, repitions } = req.body[i];
@@ -37,5 +36,21 @@ module.exports = {
         .status(404)
         .send("The exercise with the given ID was not found.");
     res.send(excercise);
+  },
+  getExercises: async (req, res) => {
+    let exercises = req.params;
+    exercises = exercises["exercises"].split(",");
+    let final = [];
+    console.log("exercises ARRAY", exercises);
+    for (let i = 0; i < exercises.length; i++) {
+      try {
+        let result = await Excercise.findById(exercises[i]);
+        final.push(result);
+        console.log("Exercise RESULT", result);
+      } catch (err) {
+        console.log("exercise ERROR", err);
+      }
+    }
+    res.send(final);
   }
 };

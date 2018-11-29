@@ -1,17 +1,12 @@
 const mongoose = require("mongoose");
 
 const workoutSectionSchema = new mongoose.Schema({
-  exercises: {
-    type: [mongoose.Schema.Types.ObjectId]
-  },
+  exercises: [{ type: mongoose.Schema.Types.ObjectId, ref: "Exercises" }],
+  numberOfSets: Number,
   restAfterSets: Number,
   author: {
-    _id: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User"
-    },
-    email: { type: String },
-    name: { type: String }
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "WorkoutSection"
   },
   created_at: {
     type: Date,

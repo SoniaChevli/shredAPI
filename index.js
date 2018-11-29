@@ -21,6 +21,10 @@ mongoose
 
 const routes = require("./routes/routes");
 routes(app);
-
-const port = process.env.PORT || 5000;
-app.listen(port, () => console.log(`Listening on port ${port}`));
+if (process.env.NODE_ENV !== "test") {
+  const port = process.env.PORT || 5000;
+  const server = app.listen(port, () =>
+    console.log(`Listening on port ${port}`)
+  );
+}
+module.exports = app;

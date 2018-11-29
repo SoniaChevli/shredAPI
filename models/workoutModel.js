@@ -7,18 +7,16 @@ const workoutSchema = new mongoose.Schema({
     maxlength: 50,
     required: true
   },
-  section: [Schema.Types.ObjectId],
+  sections: [{ type: mongoose.Schema.Types.ObjectId, ref: "WorkoutSection" }],
   author: {
-    _id: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User"
-    },
-    userName: { type: String }
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User"
   },
   created_at: {
     type: Date,
     default: Date.now()
-  }
+  },
+  scheduleDate: { type: Date }
 });
 
-module.exports = mongoose.Schema("Workout", workoutSchema);
+module.exports = mongoose.model("Workout", workoutSchema);

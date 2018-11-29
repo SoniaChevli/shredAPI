@@ -5,6 +5,7 @@ const bcrypt = require("bcrypt");
 module.exports = {
   createUser: async (req, res) => {
     const { error } = userValidate(req.body);
+
     if (error) return res.status(400).send(error.details[0].message);
 
     let user = await User.findOne({ email: req.body.email });

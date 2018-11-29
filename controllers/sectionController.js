@@ -2,18 +2,19 @@ const Section = require("../models/sectionModel");
 
 module.exports = {
   createSection: async (req, res) => {
-    const { exercises, restAfterSets } = req.body;
+    const { exercises, restAfterSets, numberOfSets } = req.body;
     const author = req.user;
 
     const newSection = new Section({
       exercises,
+      numberOfSets,
       restAfterSets,
       author
     });
     console.log("NEW SECTION", newSection);
     try {
       let section = await newSection.save();
-      console.log("section id", section._id);
+
       res.send(section._id);
     } catch (err) {
       res
@@ -22,5 +23,22 @@ module.exports = {
           "There was an issue creating the exercise. Please Try again Later."
         );
     }
+  },
+  getSections: async (req, res) => {
+    // getting an array of ids, I want to send back an array of objects
+    let sections = req.params;
+    sections = sections["sections"].split(",");
+    let final = [];
+    console.log("SECTIONS ARRAY", sections);
+    for (let i = 0; i < sections.length; i++) {
+      try {
+        let result = await Section.findById(sections[i]);
+        final.push(result);
+        console.log("SECTION RESULT", result);
+      } catch (err) {
+        console.log("SECTION ERROR", err);
+      }
+    }
+    res.send(final);
   }
 };
